@@ -1,8 +1,46 @@
+'use client';
+
 import { CreditCard, ArrowRight } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      // Webpay transaction
+      const resp = await fetch('/api/webpay/test/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: 29990 }),
+      });
+      const data = await resp.json();
+      if (!resp.ok)
+        throw new Error(data.error || 'Error al generar transacción');
+
+      const { url, token, buyOrder } = data;
+      localStorage.setItem('pendingOrder', JSON.stringify({ token, buyOrder }));
+      localStorage.setItem('backupOrder', JSON.stringify({ token, buyOrder }));
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = url;
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'TBK_TOKEN';
+      input.value = token;
+      form.appendChild(input);
+      document.body.appendChild(form);
+      form.submit();
+    } catch (err) {
+      console.log(err);
+      router.push('/error');
+    }
+  };
+
   return (
     <main>
       <section className="py-16">
@@ -19,9 +57,7 @@ export default function Home() {
           <div className="max-w-5xl mx-auto">
             <div className="w-full flex justify-between space-x-12">
               <div className="flex flex-col space-y-6">
-                <h3 className="text-2xl font-bold mb-6">
-                  Flujo del codigo
-                </h3>
+                <h3 className="text-2xl font-bold mb-6">Flujo del codigo</h3>
 
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold">
@@ -84,7 +120,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="flex justify-center">
+              <form onSubmit={handleSubmit} className="flex justify-center">
                 <Card className="w-full h-fit">
                   <CardHeader className="text-center">
                     <CardTitle className="text-xl">Simulador de Pago</CardTitle>
@@ -105,7 +141,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <Button className="w-full gap-2 h-12 text-base">
+                    <Button className="w-full gap-2 h-12 text-base cursor-pointer">
                       {/* <CreditCard className="w-5 h-5" /> */}
                       <CreditCard />
                       Pagar con Webpay
@@ -118,7 +154,7 @@ export default function Home() {
                     </p>
                   </CardContent>
                 </Card>
-              </div>
+              </form>
             </div>
           </div>
         </div>
