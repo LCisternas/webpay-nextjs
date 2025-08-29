@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     const sessionId = `S-${Date.now()}`;
     const host = process.env.NEXT_PUBLIC_HOST ?? 'http://localhost:3000';
 
-    const returnUrl = `${host}/checkout/webpay/commit`;
+    const returnUrl = `${host}/process`;
 
     const { url, token } = await tx.create(
       buyOrder,

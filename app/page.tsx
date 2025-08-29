@@ -152,6 +152,37 @@ export default function Home() {
                       * Este es un ambiente de pruebas. No se procesarán pagos
                       reales.
                     </p>
+
+                    <div className="text-xs text-muted-foreground">
+                      <p className="font-semibold text-xs text-left pl-2">
+                        Credenciales de Prueba
+                      </p>
+                      <div className="p-2">
+                        <div className="font-medium">VISA (aprobada)</div>
+                        <div>
+                          4051885600446623 / CVV: 123 / Exp.: cualquiera
+                        </div>
+                      </div>
+
+                      <div className="p-2">
+                        <div className="font-medium">
+                          Mastercard (rechazada)
+                        </div>
+                        <div>
+                          5186059559590568 / CVV: 123 / Exp.: cualquiera
+                        </div>
+                      </div>
+
+                      <div className="p-2">
+                        <div className="font-medium">Débito (Redcompra)</div>
+                        <div>cualquier número válido</div>
+                      </div>
+
+                      <div className="p-2">
+                        <div className="font-medium">RUT de simulación</div>
+                        <div>11.111.111-1 / Clave: 123</div>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </form>

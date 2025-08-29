@@ -26,12 +26,12 @@ const txCommit = new WebpayPlus.Transaction(
 );
 
 export async function POST(req: Request) {
-  // Extraemos token y buyOrder desde la petición
-  const { token, buyOrder } = await req.json();
+  // Extraemos el token desde la petición
+  const { token } = await req.json();
 
-  if (!token || !buyOrder) {
+  if (!token) {
     return NextResponse.json(
-      { error: 'Faltan y son necesarios token y buyOrder' },
+      { error: 'Token is missing' },
       { status: 400 }
     );
   }
