@@ -67,3 +67,7 @@
 
 //   return NextResponse.json(result);
 // }
+
+export async function POST(req: Request) {
+  console.log(req) // luego elimina esto
+}
