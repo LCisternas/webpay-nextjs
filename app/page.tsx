@@ -1,16 +1,18 @@
 'use client';
 
-import { CreditCard, ArrowRight } from 'lucide-react';
+import { CreditCard, ArrowRight, Loader2 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Home() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       // Webpay transaction
       const resp = await fetch('/api/webpay/test/create', {
@@ -22,9 +24,7 @@ export default function Home() {
       if (!resp.ok)
         throw new Error(data.error || 'Error al generar transacción');
 
-      const { url, token, buyOrder } = data;
-      localStorage.setItem('pendingOrder', JSON.stringify({ token, buyOrder }));
-      localStorage.setItem('backupOrder', JSON.stringify({ token, buyOrder }));
+      const { url, token } = data;
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = url;
@@ -38,6 +38,8 @@ export default function Home() {
     } catch (err) {
       console.log(err);
       router.push('/error');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -141,11 +143,19 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <Button className="w-full gap-2 h-12 text-base cursor-pointer">
-                      {/* <CreditCard className="w-5 h-5" /> */}
-                      <CreditCard />
-                      Pagar con Webpay
-                      <ArrowRight className="w-5 h-5" />
+                    <Button
+                      className="w-full gap-2 h-12 text-base cursor-pointer"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <Loader2 className="animate-spin" />
+                      ) : (
+                        <>
+                          <CreditCard />
+                          Pagar con Webpay
+                          <ArrowRight className="w-5 h-5" />
+                        </>
+                      )}
                     </Button>
 
                     <p className="text-xs text-muted-foreground text-center">

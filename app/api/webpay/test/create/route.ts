@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ url, token, buyOrder });
   } catch (err) {
-    console.error('[API /transaction/create] 💥', err);
+    console.error('[API /transaction/create]', err);
     return NextResponse.json(
       { error: err || 'Internal error creating transaction' },
       { status: 500 }
