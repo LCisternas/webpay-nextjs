@@ -67,11 +67,11 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg mb-2">
-                      Iniciar Transacción
+                      Crear Transacción
                     </h4>
                     <p className="text-muted-foreground">
-                      El usuario confirma su compra y se crea la transacción en
-                      el servidor Next.js
+                      API Route de Next.js utiliza el SDK de Transbank para
+                      crear una transacción con token único
                     </p>
                   </div>
                 </div>
@@ -82,11 +82,11 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg mb-2">
-                      Redirección a Webpay
+                      Redirección Segura
                     </h4>
                     <p className="text-muted-foreground">
-                      Redirect automático al formulario seguro de Webpay con
-                      token de transacción
+                      El usuario es redirigido automáticamente al formulario de
+                      pago seguro de Webpay
                     </p>
                   </div>
                 </div>
@@ -97,11 +97,11 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg mb-2">
-                      Confirmación y Callback
+                      Procesamiento del Pago
                     </h4>
                     <p className="text-muted-foreground">
-                      Webpay procesa el pago y retorna a la aplicación con el
-                      resultado
+                      Webpay procesa el pago del usuario y retorna el resultado
+                      a nuestra aplicación
                     </p>
                   </div>
                 </div>
@@ -112,11 +112,11 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg mb-2">
-                      Validación Server-Side
+                      Confirmación Final
                     </h4>
                     <p className="text-muted-foreground">
-                      La API de Next.js confirma la transacción con Transbank y
-                      actualiza el estado
+                      La API Route confirma la transacción con Transbank y
+                      redirige al estado final
                     </p>
                   </div>
                 </div>
